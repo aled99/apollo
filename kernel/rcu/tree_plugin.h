@@ -417,7 +417,6 @@ void __rcu_read_unlock(void)
 
 		WARN_ON_ONCE(rrln < 0 && rrln > INT_MIN / 2);
 	}
-#endif /* #ifdef CONFIG_PROVE_LOCKING */
 }
 EXPORT_SYMBOL_GPL(__rcu_read_unlock);
 

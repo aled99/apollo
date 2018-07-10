@@ -3073,21 +3073,6 @@ static int rcu_pending(int user)
 }
 
 /*
- * Check to see if there is any immediate RCU-related work to be done
- * by the current CPU, returning 1 if so.  This function is part of the
- * RCU implementation; it is -not- an exported member of the RCU API.
- */
-static int rcu_pending(void)
-{
-	struct rcu_state *rsp;
-
-	for_each_rcu_flavor(rsp)
-		if (__rcu_pending(rsp, this_cpu_ptr(&rcu_data)))
-			return 1;
-	return 0;
-}
-
-/*
  * Helper function for rcu_barrier() tracing.  If tracing is disabled,
  * the compiler is expected to optimize this away.
  */
