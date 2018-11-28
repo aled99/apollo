@@ -693,6 +693,7 @@ static void sync_rcu_exp_handler(void *unused)
 		if (rnp->expmask & rdp->grpmask)
 			rdp->deferred_qs = true;
 		raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
+		return;
 	}
 
 	/*
