@@ -1564,12 +1564,6 @@ static void print_cpu_stall_fast_no_hz(char *cp, int cpu)
 
 #endif /* #else #ifdef CONFIG_RCU_FAST_NO_HZ */
 
-/* Initiate the stall-info list. */
-static void print_cpu_stall_info_begin(void)
-{
-	pr_cont("\n");
-}
-
 /*
  * Print out diagnostic information for the specified stalled CPU.
  *
@@ -1621,13 +1615,7 @@ static void print_cpu_stall_info(int cpu)
 	       fast_no_hz);
 }
 
-/* Terminate the stall-info list. */
-static void print_cpu_stall_info_end(void)
-{
-	pr_err("\t");
-}
-
-/* Zero ->ticks_this_gp for all flavors of RCU. */
+/* Zero ->ticks_this_gp and snapshot the number of RCU softirq handlers. */
 static void zero_cpu_stall_ticks(struct rcu_data *rdp)
 {
 	rdp->ticks_this_gp = 0;
