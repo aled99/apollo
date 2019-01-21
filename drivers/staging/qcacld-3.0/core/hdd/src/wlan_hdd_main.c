@@ -16104,13 +16104,10 @@ static int wlan_deinit_sysfs(void)
  */
 static int hdd_module_init(void)
 {
-	int ret;
+	if (hdd_driver_load())
+		return -EINVAL;
 
-	ret = wlan_hdd_state_ctrl_param_create();
-	if (ret)
-		pr_err("wlan_hdd_state_create:%x\n", ret);
-
-	return ret;
+	return 0;
 }
 
 /**
