@@ -39,6 +39,13 @@ esac
 # We need access to CONFIG_ symbols
 . include/config/auto.conf
 
+# Generate a new ksym list file with symbols needed by the current
+# set of modules.
+cat > "$new_ksyms_file" << EOT
+/*
+ * Automatically generated file; DO NOT EDIT.
+ */
+
 # Generate a new symbol list file
 $CONFIG_SHELL $srctree/scripts/gen_autoksyms.sh "$new_ksyms_file"
 
