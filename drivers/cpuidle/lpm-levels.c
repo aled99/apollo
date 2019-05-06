@@ -47,7 +47,6 @@
 #define PSCI_POWER_STATE(reset) (reset << 30)
 #define PSCI_AFFINITY_LEVEL(lvl) ((lvl & 0x3) << 24)
 
-
 static struct system_pm_ops *sys_pm_ops;
 
 
@@ -1768,8 +1767,6 @@ static int lpm_probe(struct platform_device *pdev)
 		pr_err("Failed to create cluster level nodes\n");
 		goto failed;
 	}
-
-	set_update_ipi_history_callback(update_ipi_history);
 
 	return 0;
 failed:
