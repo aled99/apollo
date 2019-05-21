@@ -2109,11 +2109,6 @@ static void __init rcu_spawn_nocb_kthreads(void)
 {
 }
 
-static unsigned long rcu_get_n_cbs_nocb_cpu(struct rcu_data *rdp)
-{
-	return 0;
-}
-
 #endif /* #else #ifdef CONFIG_RCU_NOCB_CPU */
 
 /*
