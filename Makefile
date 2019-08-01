@@ -699,7 +699,7 @@ KBUILD_CFLAGS   += -O3
 endif
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -O3
-#KBUILD_CFLAGS	+= -mllvm -polly \
+KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-dce \
 		   -mllvm -polly-run-inliner \
 		   -mllvm -polly-opt-fusion=max \
@@ -707,7 +707,7 @@ KBUILD_CFLAGS   += -O3
 		   -mllvm -polly-detect-keep-going \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
-KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.2-a+crc+crypto
+KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.1-a+crc+crypto
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
