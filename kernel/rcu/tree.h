@@ -426,9 +426,6 @@ extern struct rcu_state rcu_bh_state;
 extern struct rcu_state rcu_preempt_state;
 #endif /* #ifdef CONFIG_PREEMPT_RCU */
 
-int rcu_dynticks_snap(struct rcu_data *rdp);
-
-/* Forward declarations for tree_plugin.h */
 static void rcu_bootup_announce(void);
 static void rcu_qs(void);
 static int rcu_preempt_blocked_readers_cgp(struct rcu_node *rnp);
