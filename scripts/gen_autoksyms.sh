@@ -24,7 +24,7 @@ if [ -n "$CONFIG_UNUSED_KSYMS_WHITELIST" ]; then
 	# Use 'eval' to expand the whitelist path and check if it is relative
 	eval ksym_wl="$CONFIG_UNUSED_KSYMS_WHITELIST"
 	[ "${ksym_wl}" != "${ksym_wl#/}" ] || ksym_wl="$abs_srctree/$ksym_wl"
-	if [ ! -f "$ksym_wl" ] || [ ! -r "$ksym_wl" ]; then
+	if [ ! -f "$ksym_wl" ]; then
 		echo "ERROR: '$ksym_wl' whitelist file not found" >&2
 		exit 1
 	fi
@@ -39,12 +39,11 @@ cat > "$output_file" << EOT
 
 EOT
 
-for mod in "$MODVERDIR"/*.mod; do
-	[ -f "$mod" ] && sed -n -e '3{s/ /\n/g;/^$/!p;}' "$mod"
-done | cat - "$ksym_wl" | sort -u |
-while read sym; do
-	echo "#define __KSYM_${sym} 1"
-done >> "$output_file"
+sed 's/ko$/mod/' modules.order |
+xargs -n1 sed -n -e '3{s/ /\n/g;/^$/!p;}' -- |
+cat - "$ksym_wl" |
+sort -u |
+sed -e 's/\(.*\)/#define __KSYM_\1 1/' >> "$output_file"
 
 # Special case for modversions (see modpost.c)
 if [ -n "$CONFIG_MODVERSIONS" ]; then
