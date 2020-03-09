@@ -50,9 +50,7 @@ $(warning Detected assembler with broken .inst; disassembly will be unreliable)
 endif
 
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mno-implicit-float -march=armv8.2-a+crypto+crc
-C++FLAGS:=$(filter-out -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55,$(C++FLAGS))
-A++FLAGS:=$(filter-out -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55,$(A++FLAGS))
+KBUILD_CFLAGS	+= -mno-implicit-float 
 else
 KBUILD_CFLAGS	+= -mgeneral-regs-only
 ifeq ($(CONFIG_ARCH_KONA), y)
