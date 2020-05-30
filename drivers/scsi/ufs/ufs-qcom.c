@@ -19,6 +19,7 @@
 #include <linux/phy/phy-qcom-ufs.h>
 #include <linux/clk/qcom.h>
 #include <linux/bitfield.h>
+#include <linux/devfreq.h>
 
 #ifdef CONFIG_QCOM_BUS_SCALING
 #include <linux/msm-bus.h>
@@ -2749,6 +2750,29 @@ static u32 ufs_qcom_get_user_cap_mode(struct ufs_hba *hba)
 	return UFS_WB_BUFF_PRESERVE_USER_SPACE;
 }
 
+#if IS_ENABLED(CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND)
+static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+					  struct devfreq_dev_profile *p,
+					  void *data)
+{
+	static struct devfreq_simple_ondemand_data *d;
+
+	if (!data)
+		return;
+
+	d = (struct devfreq_simple_ondemand_data *)data;
+	p->polling_ms = 60;
+	d->upthreshold = 70;
+	d->downdifferential = 5;
+}
+#else
+static void ufs_qcom_config_scaling_param(struct ufs_hba *hba,
+					  struct devfreq_dev_profile *p,
+					  void *data)
+{
+}
+#endif
+
 /**
  * struct ufs_hba_qcom_vops - UFS QCOM specific variant operations
  *
@@ -2776,6 +2800,7 @@ static struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
 	.add_debugfs		= ufs_qcom_dbg_add_debugfs,
 #endif
 	.get_user_cap_mode	= ufs_qcom_get_user_cap_mode,
+	.config_scaling_param = ufs_qcom_config_scaling_param,
 };
 
 static struct ufs_hba_pm_qos_variant_ops ufs_hba_pm_qos_variant_ops = {
