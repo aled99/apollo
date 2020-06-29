@@ -254,6 +254,7 @@ cmd_gzip = (cat $(filter-out FORCE,$^) | gzip -n -f -9 > $@) || \
 # DTC
 # ---------------------------------------------------------------------------
 DTC ?= $(objtree)/scripts/dtc/dtc
+DTC_FLAGS += -Wno-interrupt_provider
 
 # Silence warnings
 DTC_FLAGS += -q
