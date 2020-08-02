@@ -1084,7 +1084,7 @@ static int qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 	if (pon->sw_dbc_enable) {
 		elapsed_us = ktime_us_delta(ktime_get(),
 				pon->sw_dbc_last_release_time[cfg->pon_type]);
-		if (elapsed_us < pon->sw_dbc_time_us) {
+		if (elapsed_us < pon->dbc_time_us) {
 			pr_debug("Ignoring kpdpwr event; within debounce time\n");
 			return 0;
 		}
