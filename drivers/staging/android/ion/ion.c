@@ -1354,6 +1354,11 @@ static const struct file_operations debug_heap_fops2 = {
 
 void ion_device_add_heap(struct ion_device *dev, struct ion_heap *heap)
 {
+	if (heap->flags & ION_HEAP_FLAG_DEFER_FREE) {
+		heap->wq = alloc_workqueue("%s", WQ_UNBOUND | WQ_MEM_RECLAIM |
+					   WQ_CPU_INTENSIVE, 1, heap->name);
+		BUG_ON(!heap->wq);
+	}
 	char debug_name[64], buf[256];
 	int ret;
 	struct dentry *heap_root;
