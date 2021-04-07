@@ -351,8 +351,7 @@ static void do_powerkey_input_boost(struct work_struct *work)
 			sched_boost_active = true;
 	}
 
-	queue_delayed_work(cpu_boost_wq, &input_boost_rem,
-					msecs_to_jiffies(powerkey_input_boost_ms));
+	schedule_delayed_work(&input_boost_rem, msecs_to_jiffies(input_boost_ms));
 }
 
 static void cpuboost_input_event(struct input_handle *handle,
@@ -371,8 +370,6 @@ static void cpuboost_input_event(struct input_handle *handle,
 		return;
 
 	if (type == EV_KEY && code == KEY_POWER) {
-		queue_work(cpu_boost_wq, &powerkey_input_boost_work);
-	} else {
 		kthread_queue_work(&cpu_boost_worker, &input_boost_work);
 	}
 	last_input_time = ktime_to_us(ktime_get());
@@ -388,10 +385,10 @@ void touch_irq_boost(void)
 	if (now - last_input_time < MIN_INPUT_INTERVAL)
 		return;
 
-	if (work_pending(&input_boost_work))
+	if (queuing_blocked(&cpu_boost_worker, &input_boost_work))
 		return;
 
-	queue_work(cpu_boost_wq, &input_boost_work);
+	kthread_queue_work(&cpu_boost_worker, &input_boost_work);
 
 	last_input_time = ktime_to_us(ktime_get());
 }
