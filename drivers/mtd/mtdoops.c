@@ -383,15 +383,12 @@ static void mtdoops_do_dump(struct kmsg_dumper *dumper,
 
 	mtdoops_add_pmsg_head(cxt->oops_buf + ret_len, MTDOOPS_TYPE_PMSG);
 
-	/* Panics must be written immediately */
-	if (reason == KMSG_DUMP_OOPS || reason == KMSG_DUMP_PANIC || reason == KMSG_DUMP_LONG_PRESS) {
+	if (reason != KMSG_DUMP_OOPS) {
+		/* Panics must be written immediately */
 		mtdoops_write(cxt, 1);
 	} else {
 		/* For other cases, schedule work to write it "nicely" */
 		schedule_work(&cxt->work_write);
-		while (work_done == 0)
-			mdelay(1);
-		work_done = 0;
 	}
 }
 
