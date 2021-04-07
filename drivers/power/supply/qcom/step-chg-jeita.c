@@ -880,38 +880,6 @@ static void handle_jeita_fcc_scaling(struct step_chg_info *chip)
 	first_time_entry = !is_between(chip->jeita_fcc_scaling_temp_threshold[0]
 		, chip->jeita_fcc_scaling_temp_threshold[1],
 		chip->jeita_last_update_temp);
-
-	/*
-	 * VOTE on FCC only when temp is within hys or if this the very first
-	 * time we crossed the entry threshold.
-	 */
-	if (first_time_entry ||
-		((pval.intval > (chip->jeita_last_update_temp +
-			chip->jeita_fcc_config->param.rise_hys)) ||
-		(pval.intval < (chip->jeita_last_update_temp -
-			chip->jeita_fcc_config->param.fall_hys)))) {
-
-		/*
-		 * New FCC step is calculated as :
-		 *	fcc_ua = (max-fcc - ((current_temp - min-temp) *
-		 *			jeita-step-size))
-		 */
-		temp_diff = pval.intval -
-				chip->jeita_fcc_scaling_temp_threshold[0];
-		fcc_ua = div_s64((chip->jeita_max_fcc_ua -
-			(chip->jeita_fcc_step_size * temp_diff)), 100) * 100;
-
-		vote(chip->fcc_votable, JEITA_FCC_SCALE_VOTER, true, fcc_ua);
-		pr_debug("jeita-fcc-scaling: first_time_entry = %d, max_fcc_ua = %ld, voted_fcc_ua = %d, temp_diff = %d, prev_temp = %d, current_temp = %d\n",
-			first_time_entry, chip->jeita_max_fcc_ua, fcc_ua,
-			temp_diff, chip->jeita_last_update_temp, pval.intval);
-
-		chip->jeita_last_update_temp = pval.intval;
-	} else {
-		pr_debug("jeita-fcc-scaling: Skip jeita mitigation temp within first_time_entry = %d, hys temp = %d, last_updated_temp = %d\n",
-			first_time_entry, pval.intval,
-			chip->jeita_last_update_temp);
-	}
 }
 
 #define JEITA_SUSPEND_HYST_UV		50000

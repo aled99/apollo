@@ -11389,7 +11389,6 @@ static void smblib_chg_termination_work(struct work_struct *work)
 		rc = smblib_get_prop_from_bms(chg,
 				POWER_SUPPLY_PROP_CAPACITY_RAW, &pval);
 		pval.intval = pval.intval / 100;
-		capacity_raw = pval.intval;
 	} else {
 		rc = smblib_get_prop_from_bms(chg,
 				POWER_SUPPLY_PROP_REAL_CAPACITY, &pval);
@@ -11508,11 +11507,7 @@ static void smblib_chg_termination_work(struct work_struct *work)
 	 * vbat is indeed rising above vfloat.
 	 */
 	if (chg->ext_fg) {
-		if (capacity_raw < 100) {
-			vote(chg->usb_icl_votable, CHG_TERMINATION_VOTER, false, 0);
-			vote(chg->dc_suspend_votable, CHG_TERMINATION_VOTER, false, 0);
-			delay = CHG_TERM_WA_ENTRY_DELAY_MS;
-		} else if (((vbat_now_uv > chg->term_vbat_uv) && (vbat_now_uv > max_fv_uv))) {
+	         if (((vbat_now_uv > chg->term_vbat_uv) && (vbat_now_uv > max_fv_uv))) {
 			if (input_present & INPUT_PRESENT_USB)
 				vote(chg->usb_icl_votable, CHG_TERMINATION_VOTER,
 						true, 0);
