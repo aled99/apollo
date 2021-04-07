@@ -1278,19 +1278,6 @@ static int nfcc_hw_check(struct i2c_client *client, struct nqx_dev *nqx_dev)
 		dev_err(&client->dev,
 		"%s: - i2c_master_send core reset Error\n", __func__);
 
-		if (send_retry_count < MAX_RETRY_COUNT) {
-			send_retry_count  += 1;
-			goto reset_enable_gpio;
-		} else {
-			dev_warn(&client->dev,
-				"%s: - send core reset retry Max times, go on\n", __func__);
-			nqx_dev->nqx_info.info.chip_type = NFCC_SN100_A;
-			nqx_dev->nqx_info.info.rom_version = 0;
-			nqx_dev->nqx_info.info.fw_minor = 0;
-			nqx_dev->nqx_info.info.fw_major = 0;
-			goto err_nfcc_reset_failed;
-		}
-
 		if (gpio_is_valid(nqx_dev->firm_gpio)) {
 			gpio_set_value(nqx_dev->firm_gpio, 1);
 			usleep_range(10000, 10100);
@@ -1374,7 +1361,6 @@ static int nfcc_hw_check(struct i2c_client *client, struct nqx_dev *nqx_dev)
 		"%s: - i2c_master_recv get RESET rsp data Error\n", __func__);
 		goto err_nfcc_hw_check;
 	}
-#endif
 
 	/* Retrieve NFCC HW info */
 	ret = get_nfcc_hw_info(client, nqx_dev,

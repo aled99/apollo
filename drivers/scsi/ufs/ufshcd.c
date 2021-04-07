@@ -8647,9 +8647,6 @@ static int ufs_get_device_desc(struct ufs_hba *hba,
 		hba->dev_info.b_wb_buffer_type =
 			desc_buf[DEVICE_DESC_PARAM_WB_TYPE];
 
-		if (hba->dev_info.b_wb_buffer_type)
-			goto skip_unit_desc;
-
 		hba->dev_info.wb_config_lun = false;
 		for (lun = 0; lun < UFS_UPIU_MAX_GENERAL_LUN; lun++) {
 			d_lu_wb_buf_alloc = 0;
