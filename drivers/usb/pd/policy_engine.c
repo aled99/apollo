@@ -667,25 +667,6 @@ static void usbpd_disable_active_work(struct work_struct *w)
 		power_supply_set_property(pd->usb_psy,
 				POWER_SUPPLY_PROP_PD_ACTIVE, &val);
 	}
-
-static void restart_usb_host_work(struct work_struct *w)
-{
-	struct usbpd *pd = container_of(w, struct usbpd, restart_host_work);
-	int ret;
-
-	if (!pd->no_usb3dp_concurrency)
-		return;
-
-	stop_usb_host(pd);
-
-	/* blocks until USB host is completely stopped */
-	ret = extcon_blocking_sync(pd->extcon, EXTCON_USB_HOST, STOP_USB_HOST);
-	if (ret) {
-		usbpd_err(&pd->dev, "err(%d) stopping host", ret);
-		return;
-	}
-
-	start_usb_host(pd, false);
 }
 
 /**
