@@ -637,8 +637,6 @@ ifdef CONFIG_LTO_CLANG
 LLVM_AR		:= llvm-ar
 LLVM_NM		:= llvm-nm
 export LLVM_AR LLVM_NM
-# Set O3 optimization level for LTO
-LDFLAGS		+= --plugin-opt=O3
 endif
 
 # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
@@ -712,7 +710,6 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
 KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.2-a+crc+crypto
-KBUILD_AFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.2-a+crc+crypto
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
