@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-
+ccflags-y		:= -fno-lto
 obj-$(CONFIG_HAS_DMA)			+= mapping.o
 obj-$(CONFIG_DMA_CMA)			+= contiguous.o
 obj-$(CONFIG_HAVE_GENERIC_DMA_COHERENT) += coherent.o removed.o

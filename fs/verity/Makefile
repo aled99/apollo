@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-
+ccflags-y		:= -fno-lto
 obj-$(CONFIG_FS_VERITY) += enable.o \
 			   hash_algs.o \
 			   init.o \

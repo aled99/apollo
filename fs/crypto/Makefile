@@ -1,5 +1,5 @@
 obj-$(CONFIG_FS_ENCRYPTION)	+= fscrypto.o
-
+ccflags-y		:= -fno-lto
 fscrypto-y := crypto.o \
 	      fname.o \
 	      hkdf.o \

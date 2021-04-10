@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 
 # Do not instrument the tracer itself:
-
+ccflags-y		:= -fno-lto
 ifdef CONFIG_FUNCTION_TRACER
 ORIG_CFLAGS := $(KBUILD_CFLAGS)
 KBUILD_CFLAGS = $(subst $(CC_FLAGS_FTRACE),,$(ORIG_CFLAGS))

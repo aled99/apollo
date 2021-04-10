@@ -37,6 +37,8 @@ ifndef CONFIG_CFI_CLANG
 CFLAGS_sys_ni.o = $(DISABLE_LTO)
 endif
 
+ccflags-y		:= -fno-lto
+
 # Don't instrument error handlers
 CFLAGS_cfi.o = $(DISABLE_CFI_CLANG)
 

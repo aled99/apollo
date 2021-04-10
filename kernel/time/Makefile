@@ -8,6 +8,7 @@ ifeq ($(CONFIG_POSIX_TIMERS),y)
 else
  obj-y += posix-stubs.o
 endif
+ccflags-y		:= -fno-lto
 
 obj-$(CONFIG_GENERIC_CLOCKEVENTS)		+= clockevents.o tick-common.o
 ifeq ($(CONFIG_GENERIC_CLOCKEVENTS_BROADCAST),y)

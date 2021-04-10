@@ -2,7 +2,7 @@
 #
 # Makefile for the linux kernel signature checking certificates.
 #
-
+ccflags-y		:= -fno-lto
 obj-$(CONFIG_SYSTEM_TRUSTED_KEYRING) += system_keyring.o system_certificates.o
 obj-$(CONFIG_SYSTEM_BLACKLIST_KEYRING) += blacklist.o
 ifneq ($(CONFIG_SYSTEM_BLACKLIST_HASH_LIST),"")
