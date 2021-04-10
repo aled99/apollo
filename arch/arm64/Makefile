@@ -51,7 +51,7 @@ endif
 
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mno-implicit-float
-C++FLAGS:=$(filter-out -mcpu=cortex-a55 -mtune=cortex-a55,$(C++FLAGS))
+C++FLAGS:=$(filter-out -mcpu -mtune,$(C++FLAGS))
 else
 KBUILD_CFLAGS	+= -mgeneral-regs-only
 ifeq ($(CONFIG_ARCH_KONA), y)
