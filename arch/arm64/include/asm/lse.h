@@ -32,3 +32,4 @@ __asm__(".arch_extension	lse");
 #endif	/* __ASSEMBLER__ */
 #endif	/* CONFIG_AS_LSE && CONFIG_ARM64_LSE_ATOMICS */
 #endif	/* __ASM_LSE_H */
+
