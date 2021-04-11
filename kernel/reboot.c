@@ -616,3 +616,4 @@ static int __init get_poweroff_charger_mode(char *line)
 	return 1;
 }
 __setup("androidboot.mode=", get_poweroff_charger_mode);
+
