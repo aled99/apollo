@@ -713,6 +713,7 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 KBUILD_CFLAGS	+= -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55 -march=armv8.2-a+crypto+crc
 KBUILD_AFLAGS	+= -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55 -march=armv8.2-a+crypto+crc
 endif
+endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
@@ -768,6 +769,7 @@ ifdef CONFIG_MODULES
 # source of a reference will be _MergedGlobals and not on of the whitelisted names.
 # See modpost pattern 2
 KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
+endif
 else
 
 # These warnings generated too much noise in a regular build.
