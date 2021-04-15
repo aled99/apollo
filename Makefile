@@ -699,9 +699,9 @@ else
 KBUILD_CFLAGS   += -O3
 endif
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS   += -Ofast
-KBUILD_AFLAGS   += -Ofast
-KBUILD_LDFLAGS  += -Ofast
+KBUILD_CFLAGS   += -O3
+KBUILD_AFLAGS   += -O3
+KBUILD_LDFLAGS  += -O3
 KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-run-dce \
 		   -mllvm -polly-run-inliner \
