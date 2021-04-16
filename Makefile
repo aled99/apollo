@@ -719,8 +719,8 @@ KBUILD_AFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-ast-use-context \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
-KBUILD_CFLAGS	+= -mcpu=cortex-a55+crypto -mtune=cortex-a77 -march=armv8.2-a+crypto+crc
-KBUILD_AFLAGS	+= -mcpu=cortex-a55+crypto -mtune=cortex-a77 -march=armv8.2-a+crypto+crc
+KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a77 -march=armv8.2-a
+KBUILD_AFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a77 -march=armv8.2-a
 endif
 endif
 
