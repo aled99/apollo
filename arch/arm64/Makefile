@@ -21,15 +21,6 @@ ifeq ($(CONFIG_RELOCATABLE), y)
 LDFLAGS_vmlinux		+= -shared -Bsymbolic -z notext \
 			$(call ld-option, --no-apply-dynamic-relocs)
 endif
-
-ifeq ($(CONFIG_ARM64_ERRATUM_843419),y)
-  ifeq ($(call ld-option, --fix-cortex-a53-843419),)
-$(warning ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum)
-  else
-LDFLAGS_vmlinux	+= --fix-cortex-a53-843419
-  endif
-endif
-
 KBUILD_DEFCONFIG := defconfig
 
 # Check for binutils support for specific extensions
@@ -41,13 +32,6 @@ $(warning LSE atomics not supported by binutils)
   endif
 endif
 
-ifeq ($(CONFIG_ARM64), y)
-brokengasinst := $(call as-instr,1:\n.inst 0\n.rept . - 1b\n\nnop\n.endr\n,,-DCONFIG_BROKEN_GAS_INST=1)
-
-  ifneq ($(brokengasinst),)
-$(warning Detected assembler with broken .inst; disassembly will be unreliable)
-  endif
-endif
 
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mno-implicit-float 
