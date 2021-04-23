@@ -691,6 +691,7 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
 KBUILD_CFLAGS   += -O3
+endif
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -O3
 endif
@@ -781,6 +782,7 @@ ifdef CONFIG_MODULES
 # source of a reference will be _MergedGlobals and not on of the whitelisted names.
 # See modpost pattern 2
 KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
+endif
 else
 
 # These warnings generated too much noise in a regular build.
@@ -1927,4 +1929,3 @@ FORCE:
 # Declare the contents of the PHONY variable as phony.  We keep that
 # information in a variable so we can use it in if_changed and friends.
 .PHONY: $(PHONY)
-endif
