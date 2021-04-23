@@ -14999,61 +14999,6 @@ const struct file_operations wlan_hdd_state_fops = {
 	.release = wlan_hdd_state_ctrl_param_release,
 };
 
-static int  wlan_hdd_state_ctrl_param_create(void)
-{
-	unsigned int wlan_hdd_state_major = 0;
-	int ret;
-	struct device *dev;
-
-	init_completion(&wlan_start_comp);
-	qdf_atomic_init(&wlan_hdd_state_fops_ref);
-
-	device = MKDEV(wlan_hdd_state_major, 0);
-
-	ret = alloc_chrdev_region(&device, 0, dev_num, "qcwlanstate");
-	if (ret) {
-		pr_err("Failed to register qcwlanstate");
-		goto dev_alloc_err;
-	}
-	wlan_hdd_state_major = MAJOR(device);
-
-	class = class_create(THIS_MODULE, WLAN_MODULE_NAME);
-	if (IS_ERR(class)) {
-		pr_err("wlan_hdd_state class_create error");
-		goto class_err;
-	}
-
-	dev = device_create(class, NULL, device, NULL, WLAN_MODULE_NAME);
-	if (IS_ERR(dev)) {
-		pr_err("wlan_hdd_statedevice_create error");
-		goto err_class_destroy;
-	}
-
-	cdev_init(&wlan_hdd_state_cdev, &wlan_hdd_state_fops);
-
-	wlan_hdd_state_cdev.owner = THIS_MODULE;
-
-	ret = cdev_add(&wlan_hdd_state_cdev, device, dev_num);
-	if (ret) {
-		pr_err("Failed to add cdev error");
-		goto cdev_add_err;
-	}
-
-	pr_info("wlan_hdd_state %s major(%d) initialized",
-		WLAN_MODULE_NAME, wlan_hdd_state_major);
-
-	return 0;
-
-cdev_add_err:
-	device_destroy(class, device);
-err_class_destroy:
-	class_destroy(class);
-class_err:
-	unregister_chrdev_region(device, dev_num);
-dev_alloc_err:
-	return -ENODEV;
-}
-
 static void wlan_hdd_state_ctrl_param_destroy(void)
 {
 	cdev_del(&wlan_hdd_state_cdev);
