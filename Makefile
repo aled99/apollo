@@ -698,6 +698,7 @@ KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
 else
 KBUILD_CFLAGS   += -O3
 endif
+endif
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -O3
 KBUILD_AFLAGS   += -O3
@@ -728,7 +729,6 @@ KBUILD_LDFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-invariant-load-hoisting
 KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.2-a+crc+crypto
 KBUILD_AFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55 -march=armv8.2-a+crc+crypto
-endif
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
