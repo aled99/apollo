@@ -502,7 +502,7 @@ static inline unsigned long __cmpxchg_case_##name(volatile void *ptr,	\
 	return x0;							\
 }
 
-__CMPXCHG_CASE(w, b,     1,   )
+__CMPXCHG_CASE(w,  ,     1,   )
 __CMPXCHG_CASE(w, h,     2,   )
 __CMPXCHG_CASE(w,  ,     4,   )
 __CMPXCHG_CASE(x,  ,     8,   )
