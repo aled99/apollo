@@ -58,6 +58,11 @@ endif
 
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS	+= -mno-implicit-float
+ifeq ($(CONFIG_ARCH_KONA), y)
+KBUILD_CFLAGS   += -mcpu=cortex-a55
+KBUILD_AFLAGS   += -mcpu=cortex-a55
+KBUILD_LDFLAGS  += -mllvm -mcpu=cortex-a55
+endif
 else
 KBUILD_CFLAGS	+= -mgeneral-regs-only
 endif
