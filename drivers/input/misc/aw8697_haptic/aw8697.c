@@ -854,11 +854,9 @@ static int aw8697_haptic_active(struct aw8697 *aw8697)
 static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 				   unsigned char play_mode)
 {
-	pr_debug("%s enter\n", __func__);
 
 	switch (play_mode) {
 	case AW8697_HAPTIC_STANDBY_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter standby mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_STANDBY_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSINTM,
@@ -872,7 +870,6 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 		}
 		break;
 	case AW8697_HAPTIC_RAM_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter ram mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_RAM_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
@@ -894,7 +891,6 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 
 		break;
 	case AW8697_HAPTIC_RAM_LOOP_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter ram loop mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_RAM_LOOP_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
@@ -915,7 +911,6 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 
 		break;
 	case AW8697_HAPTIC_RTP_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter rtp mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_RTP_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
@@ -936,7 +931,6 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 		}
 		break;
 	case AW8697_HAPTIC_TRIG_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter trig mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_TRIG_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
@@ -951,7 +945,6 @@ static int aw8697_haptic_play_mode(struct aw8697 *aw8697,
 
 		break;
 	case AW8697_HAPTIC_CONT_MODE:
-		aw_dev_info(aw8697->dev, "%s: enter cont mode\n", __func__);
 		aw8697->play_mode = AW8697_HAPTIC_CONT_MODE;
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
@@ -2008,8 +2001,6 @@ static int aw869xx_haptic_rtp_init(struct aw8697 *aw8697)
 }
 static int16_t aw8697_haptic_effect_strength(struct aw8697 *aw8697)
 {
-	pr_debug("%s enter\n", __func__);
-	pr_debug("%s: aw8697->play.vmax_mv =0x%x\n", __func__, aw8697->play.vmax_mv);
 #if 0
 	switch (aw8697->play.vmax_mv) {
 	case AW8697_LIGHT_MAGNITUDE:
@@ -2035,7 +2026,6 @@ static int16_t aw8697_haptic_effect_strength(struct aw8697 *aw8697)
 		aw8697->level = 0x1E; /*30*/
 #endif
 
-	pr_info("%s: aw8697->level =0x%x\n", __func__, aw8697->level);
 	return 0;
 }
 
@@ -2075,7 +2065,6 @@ static void aw8697_haptic_upload_lra(struct aw8697 *aw8697, unsigned char flag)
 {
 	switch (flag) {
 	case WRITE_ZERO:
-		pr_info("%s write zero to trim_lra!\n", __func__);
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write(aw8697, AW8697_REG_TRIM_LRA, 0x00);
 		} else {
@@ -2086,8 +2075,6 @@ static void aw8697_haptic_upload_lra(struct aw8697 *aw8697, unsigned char flag)
 
 		break;
 	case F0_CALI:
-		pr_info("%s write f0_calib_data to trim_lra = 0x%02X\n",
-			__func__, aw8697->f0_calib_data);
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write(aw8697, AW8697_REG_TRIM_LRA,
 					 (char)aw8697->f0_calib_data);
@@ -2098,8 +2085,6 @@ static void aw8697_haptic_upload_lra(struct aw8697 *aw8697, unsigned char flag)
 		}
 		break;
 	case OSC_CALI:
-		pr_info("%s write lra_calib_data to trim_lra = 0x%02X\n",
-			__func__, aw8697->lra_calib_data);
 		if (aw8697->chip_version == AW8697_CHIP_9X) {
 			aw8697_i2c_write(aw8697, AW8697_REG_TRIM_LRA,
 					 (char)aw8697->lra_calib_data);
@@ -3687,9 +3672,6 @@ static void aw8697_vibrator_work_routine(struct work_struct *work)
 	struct aw8697 *aw8697 =
 	    container_of(work, struct aw8697, vibrator_work);
 
-	pr_debug("%s enter\n", __func__);
-	pr_info("%s: effect_id = %d state=%d activate_mode = %d duration = %d\n", __func__,
-		aw8697->effect_id, aw8697->state, aw8697->activate_mode, aw8697->duration);
 	mutex_lock(&aw8697->lock);
 	aw8697_haptic_upload_lra(aw8697, F0_CALI);
 	aw8697_haptic_stop(aw8697);
@@ -4556,19 +4538,13 @@ static int aw8697_haptics_upload_effect(struct input_dev *dev,
 	if (hrtimer_active(&aw8697->timer)) {
 		rem = hrtimer_get_remaining(&aw8697->timer);
 		time_us = ktime_to_us(rem);
-		printk("waiting for playing clear sequence: %lld us\n",
-			time_us);
 		usleep_range(time_us, time_us + 100);
 	}
-	pr_debug("%s: effect->type=0x%x,FF_CONSTANT=0x%x,FF_PERIODIC=0x%x\n",
-		__func__, effect->type, FF_CONSTANT, FF_PERIODIC);
 	aw8697->effect_type = effect->type;
 	 mutex_lock(&aw8697->lock);
 	 while (atomic_read(&aw8697->exit_in_rtp_loop)) {
-		 pr_info("%s  goint to waiting rtp  exit\n", __func__);
 		 mutex_unlock(&aw8697->lock);
 		 ret = wait_event_interruptible(aw8697->stop_wait_q, atomic_read(&aw8697->exit_in_rtp_loop) == 0);
-		 pr_info("%s  wakeup \n", __func__);
 		 if (ret == -ERESTARTSYS) {
 			 mutex_unlock(&aw8697->lock);
 			 pr_err("%s wake up by signal return erro\n", __func__);
@@ -4578,7 +4554,6 @@ static int aw8697_haptics_upload_effect(struct input_dev *dev,
 	 }
 
 	if (aw8697->effect_type == FF_CONSTANT) {
-		pr_debug("%s: effect_type is  FF_CONSTANT! \n", __func__);
 		/*cont mode set duration */
 		aw8697->duration = effect->replay.length;
 		aw8697->activate_mode = AW8697_HAPTIC_ACTIVATE_RAM_LOOP_MODE;
@@ -4590,7 +4565,6 @@ static int aw8697_haptics_upload_effect(struct input_dev *dev,
 			return -EINVAL;
 		}
 
-		pr_debug("%s: effect_type is  FF_PERIODIC! \n", __func__);
 		if (copy_from_user(data, effect->u.periodic.custom_data,
 				   sizeof(s16) * CUSTOM_DATA_LEN)) {
 			mutex_unlock(&aw8697->lock);
@@ -4598,7 +4572,6 @@ static int aw8697_haptics_upload_effect(struct input_dev *dev,
 		}
 
 		aw8697->effect_id = data[0];
-		pr_debug("%s: aw8697->effect_id =%d \n", __func__, aw8697->effect_id);
 		play->vmax_mv = effect->u.periodic.magnitude; /*vmax level*/
 
 		if (aw8697->effect_id < 0 ||
@@ -4610,22 +4583,16 @@ static int aw8697_haptics_upload_effect(struct input_dev *dev,
 
 		if (aw8697->effect_id < aw8697->info.effect_id_boundary) {
 			aw8697->activate_mode = AW8697_HAPTIC_ACTIVATE_RAM_MODE;
-			pr_debug("%s: aw8697->effect_id=%d , aw8697->activate_mode = %d\n",
-				__func__, aw8697->effect_id, aw8697->activate_mode);
 			data[1] = aw8697->predefined[aw8697->effect_id].play_rate_us/1000000; /*second data*/
 			data[2] = aw8697->predefined[aw8697->effect_id].play_rate_us/1000;  /*millisecond data*/
 		}
 		if (aw8697->effect_id >= aw8697->info.effect_id_boundary) {
 			aw8697->activate_mode = AW8697_HAPTIC_ACTIVATE_RTP_MODE;
-			pr_debug("%s: aw8697->effect_id=%d , aw8697->activate_mode = %d\n",
-				__func__, aw8697->effect_id, aw8697->activate_mode);
 			data[1] = aw8697->info.rtp_time[aw8697->effect_id]/1000; /*second data*/
 			data[2] = aw8697->info.rtp_time[aw8697->effect_id];  /*millisecond data*/
 		}
 		if (aw8697->effect_id == CUSTOME_WAVE_ID) {
 			aw8697->activate_mode = AW8697_HAPTIC_ACTIVATE_RTP_MODE;
-			pr_debug("%s: aw8697->effect_id=%d , aw8697->activate_mode = %d\n",
-				__func__, aw8697->effect_id, aw8697->activate_mode);
 			data[1] = aw8697->info.rtp_time[aw8697->effect_id]/1000; /*second data*/
 			data[2] = aw8697->info.rtp_time[aw8697->effect_id];  /*millisecond data*/
 			aw8697->is_custom_wave = 1;
@@ -4657,8 +4624,6 @@ static int aw8697_haptics_playback(struct input_dev *dev, int effect_id,
 	//printk("%s aw8697->effect_id=%d , aw8697->activate_mode = %d\n",
 	//     __func__, aw8697->effect_id, aw8697->activate_mode);
 
-	pr_debug("%s: effect_id=%d , activate_mode = %d val = %d\n",
-		__func__, aw8697->effect_id, aw8697->activate_mode, val);
 	/*for osc calibration*/
 	if (aw8697->osc_cali_run != 0)
 		return 0;
@@ -4671,17 +4636,14 @@ static int aw8697_haptics_playback(struct input_dev *dev, int effect_id,
 
 	if (aw8697->effect_type == FF_CONSTANT &&
 		aw8697->activate_mode == AW8697_HAPTIC_ACTIVATE_RAM_LOOP_MODE) {
-		pr_debug("%s: enter ram_loop_mode \n", __func__);
 		//schedule_work(&aw8697->vibrator_work);
 		queue_work(aw8697->work_queue, &aw8697->vibrator_work);
 	} else if (aw8697->effect_type == FF_PERIODIC &&
 		aw8697->activate_mode == AW8697_HAPTIC_ACTIVATE_RAM_MODE) {
-		pr_debug("%s: enter  ram_mode\n", __func__);
 		//schedule_work(&aw8697->vibrator_work)
 		queue_work(aw8697->work_queue, &aw8697->vibrator_work);;
 	} else if ((aw8697->effect_type == FF_PERIODIC) &&
 		aw8697->activate_mode == AW8697_HAPTIC_ACTIVATE_RTP_MODE) {
-		pr_debug("%s: enter  rtp_mode\n", __func__);
 		//schedule_work(&aw8697->rtp_work);
 		queue_work(aw8697->work_queue, &aw8697->rtp_work);
 		//if we are in the play mode, force to exit
