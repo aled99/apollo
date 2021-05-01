@@ -43,6 +43,8 @@
 #include "bq25790_reg.h"
 #include "bq25790.h"
 
+static int debug_mask = 0;
+
 #define	bq_info	pr_err
 #define bq_dbg	pr_debug
 #define bq_err	pr_err

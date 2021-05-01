@@ -22,7 +22,7 @@ enum print_reason {
 	PR_FW = BIT(4),
 };
 
-static int debug_mask = PR_OEM | PR_FW;
+static int debug_mask = 0;
 
 module_param_named(debug_mask, debug_mask, int, 0600);
 
