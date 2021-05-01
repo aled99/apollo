@@ -167,7 +167,6 @@ static void nvt_irq_enable(bool enable)
 	}
 
 	desc = irq_to_desc(ts->client->irq);
-	NVT_LOG("enable=%d, desc->depth=%d\n", enable, desc->depth);
 }
 
 /*******************************************************
@@ -293,7 +292,6 @@ int32_t nvt_write_addr(uint32_t addr, uint8_t data)
 {
 	int32_t ret = 0;
 	uint8_t buf[4] = {0};
-	NVT_ERR("nvt_write_addr enter\n");
 	/* ---set xdata index--- */
 	buf[0] = 0xFF;	/* set index/page/addr command */
 	buf[1] = (addr >> 15) & 0xFF;
@@ -604,8 +602,6 @@ int32_t nvt_read_pid(void)
 	/* ---set xdata index to EVENT BUF ADDR--- */
 	nvt_set_page(ts->mmap->EVENT_BUF_ADDR);
 
-	NVT_LOG("PID=%04X\n", ts->nvt_pid);
-
 	return ret;
 }
 
@@ -663,23 +659,17 @@ info_retry:
 		ts->abs_x_max = TOUCH_DEFAULT_MAX_WIDTH;
 		ts->abs_y_max = TOUCH_DEFAULT_MAX_HEIGHT;
 		ts->max_button_num = TOUCH_KEY_NUM;
-
+		
 		if(retry_count < 3) {
 			retry_count++;
-			NVT_ERR("retry_count=%d\n", retry_count);
 			goto info_retry;
 		} else {
-			NVT_ERR("Set default fw_ver=%d, x_num=%d, y_num=%d, "
-					"abs_x_max=%d, abs_y_max=%d, max_button_num=%d!\n",
-					ts->fw_ver, ts->x_num, ts->y_num,
-					ts->abs_x_max, ts->abs_y_max, ts->max_button_num);
 			ret = -1;
 		}
 	} else {
+
 		ret = 0;
 	}
-
-	NVT_LOG("FW type is 0x%02X, fw_ver=%d\n", buf[14], ts->fw_ver);
 
 	/* ---Get Novatek PID--- */
 	nvt_read_pid();
@@ -2790,8 +2780,6 @@ static int32_t nvt_ts_suspend(struct device *dev)
 	pm_stay_awake(dev);
 	ts->ic_state = NVT_IC_SUSPEND_IN;
 
-	NVT_LOG("start\n");
-
 	if (!ts->db_wakeup)
 		nvt_irq_enable(false);	/*must before hold lock*/
 
@@ -2855,7 +2843,6 @@ static int32_t nvt_ts_suspend(struct device *dev)
 		ts->ic_state = NVT_IC_SUSPEND_OUT;
 	else
 		NVT_ERR("IC state may error,caused by suspend/resume flow, please CHECK!!");
-	NVT_LOG("end\n");
 	pm_relax(dev);
 	return 0;
 }
@@ -2892,7 +2879,6 @@ static int32_t nvt_ts_resume(struct device *dev)
 	ts->ic_state = NVT_IC_RESUME_IN;
 
 	mutex_lock(&ts->lock);
-	NVT_LOG("start\n");
 
 	/*  please make sure display reset(RESX) sequence and mipi dsi cmds sent before this */
 #if NVT_TOUCH_SUPPORT_HW_RST
@@ -2940,7 +2926,6 @@ static int32_t nvt_ts_resume(struct device *dev)
 Exit:
 	if (ts->dev_pm_suspend)
 		pm_relax(dev);
-	NVT_LOG("end\n");
 
 	return 0;
 }
@@ -2961,13 +2946,11 @@ static int nvt_drm_notifier_callback(struct notifier_block *self, unsigned long 
 		blank = evdata->data;
 		if (event == MI_DRM_EARLY_EVENT_BLANK) {
 			if (*blank == MI_DRM_BLANK_POWERDOWN) {
-				NVT_LOG("event=%lu, *blank=%d\n", event, *blank);
 				flush_workqueue(ts_data->event_wq);
 				nvt_ts_suspend(&ts_data->client->dev);
 			}
 		} else if (event == MI_DRM_EVENT_BLANK) {
 			if (*blank == MI_DRM_BLANK_UNBLANK) {
-				NVT_LOG("event=%lu, *blank=%d\n", event, *blank);
 				flush_workqueue(ts_data->event_wq);
 				queue_work(ts_data->event_wq, &ts_data->resume_work);
 			}
@@ -3128,3 +3111,4 @@ late_initcall(nvt_driver_init);
 
 MODULE_DESCRIPTION("Novatek Touchscreen Driver");
 MODULE_LICENSE("GPL");
+

@@ -50,7 +50,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE              := $(AUDIO_CHIPSET)_cs35l41.ko
 LOCAL_MODULE_KBUILD_NAME  := cs35l41_dlkm.ko
 LOCAL_MODULE_TAGS         := optional
-LOCAL_MODULE_DEBUG_ENABLE := true
+LOCAL_MODULE_DEBUG_ENABLE := false
 LOCAL_MODULE_PATH         := $(KERNEL_MODULES_OUT)
 include $(DLKM_DIR)/AndroidKernelModule.mk
 ###########################################################

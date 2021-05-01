@@ -878,7 +878,6 @@ static int aw8697_haptic_softreset(struct aw8697 *aw8697)
 
 static int aw8697_haptic_active(struct aw8697 *aw8697)
 {
-	pr_debug("%s enter\n", __func__);
 
 	aw8697_i2c_write_bits(aw8697, AW8697_REG_SYSCTRL,
 			      AW8697_BIT_SYSCTRL_WORK_MODE_MASK,
@@ -1042,8 +1041,6 @@ static int aw8697_haptic_stop_delay(struct aw8697 *aw8697)
 			return 0;
 		}
 		msleep(2);
-		pr_debug("%s wait for standby, reg glb_state=0x%02x\n",
-			 __func__, reg_val);
 	}
 	pr_err("%s do not enter standby automatically\n", __func__);
 
@@ -1056,7 +1053,6 @@ static int aw8697_haptic_stop(struct aw8697 *aw8697)
 	unsigned char reg_val = 0;
 	bool force_flag = true;
 
-	aw_dev_info(aw8697->dev, "%s enter\n", __func__);
 	if (aw8697->chip_version == AW8697_CHIP_9X) {
 		aw8697_haptic_play_go(aw8697, false);
 		aw8697_haptic_stop_delay(aw8697);
@@ -1108,7 +1104,6 @@ static int aw8697_haptic_stop(struct aw8697 *aw8697)
 
 static int aw8697_haptic_start(struct aw8697 *aw8697)
 {
-	pr_debug("%s enter\n", __func__);
 
 	aw8697_haptic_play_go(aw8697, true);
 
@@ -4726,7 +4721,6 @@ static int aw8697_haptics_erase(struct input_dev *dev, int effect_id)
 	if (aw8697->osc_cali_run != 0)
 		return 0;
 
-	pr_debug("%s: enter\n", __func__);
 	aw8697->effect_type = 0;
 	aw8697->is_custom_wave = 0;
 	aw8697->duration = 0;
@@ -6789,3 +6783,4 @@ module_exit(aw8697_i2c_exit);
 
 MODULE_DESCRIPTION("AW8697 Haptic Driver");
 MODULE_LICENSE("GPL v2");
+
