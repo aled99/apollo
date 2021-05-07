@@ -1317,7 +1317,6 @@ static irqreturn_t nvt_ts_work_func(int irq, void *data)
 		input_id = (uint8_t)(point_data[1] >> 3);
 		nvt_ts_wakeup_gesture_report(input_id, point_data);
 		mutex_unlock(&ts->lock);
-		pm_qos_update_request(&ts_data->pm_qos_req, PM_QOS_DEFAULT_VALUE);
 		return IRQ_HANDLED;
 	}
 #endif
@@ -2405,7 +2404,6 @@ static int32_t nvt_ts_probe(struct platform_device *pdev)
 		NVT_LOG("int_trigger_type=%d\n", ts->int_trigger_type);
 		ts->irq_enabled = true;
 		ts->pm_spi_req.type = PM_QOS_REQ_AFFINE_IRQ;
-		ts->pm_spi_req.irq = geni_spi_get_master_irq(ts_xsfer);
 		irq_set_perf_affinity(ts->pm_spi_req.irq, IRQF_PERF_AFFINE);
 		pm_qos_add_request(&ts->pm_spi_req, PM_QOS_CPU_DMA_LATENCY,
 			   PM_QOS_DEFAULT_VALUE);
