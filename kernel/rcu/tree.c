@@ -63,16 +63,12 @@
 #include <linux/ftrace.h>
 #include <linux/tick.h>
 #include <linux/sysrq.h>
-<<<<<<< HEAD
-=======
-#include <linux/kprobes.h>
 #include <linux/gfp.h>
 #include <linux/oom.h>
 #include <linux/smpboot.h>
 #include <linux/jiffies.h>
 #include <linux/sched/isolation.h>
 #include "../time/tick-internal.h"
->>>>>>> 48d07c04b4cc... rcu: Enable elimination of Tree-RCU softirq processing
 
 #include "tree.h"
 #include "rcu.h"
