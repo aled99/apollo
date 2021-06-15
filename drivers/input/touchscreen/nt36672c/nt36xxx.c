@@ -38,6 +38,7 @@
 #endif
 
 #include "nt36xxx.h"
+#include "spi-xiaomi-tp.h"
 #if NVT_TOUCH_ESD_PROTECT
 #include <linux/jiffies.h>
 #endif /* #if NVT_TOUCH_ESD_PROTECT */
