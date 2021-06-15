@@ -698,7 +698,7 @@ KBUILD_CFLAGS   += -O3
 endif
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -O3
-KBUILD_CFLAGS	+= -mcpu=cortex-a55+crypto+crc -march=armv8.2-a+crc+crypto
+KBUILD_CFLAGS	+= -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55
 endif
 endif
 
@@ -1916,4 +1916,3 @@ FORCE:
 # Declare the contents of the PHONY variable as phony.  We keep that
 # information in a variable so we can use it in if_changed and friends.
 .PHONY: $(PHONY)
-endif
