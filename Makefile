@@ -637,6 +637,7 @@ ifdef CONFIG_LTO_CLANG
 LLVM_AR		:= llvm-ar
 LLVM_NM		:= llvm-nm
 export LLVM_AR LLVM_NM
+LDFLAGS		+= --plugin-opt=O3 
 endif
 
 # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
@@ -704,7 +705,35 @@ KBUILD_CFLAGS   += -O3
 endif
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -O3
+KBUILD_AFLAGS   += -O3
+KBUILD_LDFLAGS  += -O3
+KBUILD_CFLAGS	+= -mllvm -polly \
+		   -mllvm -polly-run-dce \
+		   -mllvm -polly-run-inliner \
+		   -mllvm -polly-opt-fusion=max \
+		   -mllvm -polly-ast-use-context \
+		   -mllvm -polly-detect-keep-going \
+		   -mllvm -polly-vectorizer=stripmine \
+		   -mllvm -polly-invariant-load-hoisting
+KBUILD_AFLAGS	+= -mllvm -polly \
+		   -mllvm -polly-run-dce \
+		   -mllvm -polly-run-inliner \
+		   -mllvm -polly-opt-fusion=max \
+		   -mllvm -polly-ast-use-context \
+		   -mllvm -polly-detect-keep-going \
+		   -mllvm -polly-vectorizer=stripmine \
+		   -mllvm -polly-invariant-load-hoisting
+KBUILD_LDFLAGS	+= -mllvm -polly \
+		   -mllvm -polly-run-dce \
+		   -mllvm -polly-run-inliner \
+		   -mllvm -polly-opt-fusion=max \
+		   -mllvm -polly-ast-use-context \
+		   -mllvm -polly-detect-keep-going \
+		   -mllvm -polly-vectorizer=stripmine \
+		   -mllvm -polly-invariant-load-hoisting
 KBUILD_CFLAGS	+= -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55
+KBUILD_AFLAGS	+= -mcpu=cortex-a55+crypto+crc -mtune=cortex-a55
+KBUILD_LDFLAGS	+= --plugin-opt=mcpu=cortex-a55 
 endif
 endif
 
