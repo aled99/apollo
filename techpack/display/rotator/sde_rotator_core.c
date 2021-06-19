@@ -1543,7 +1543,7 @@ static void sde_rotator_commit_handler(struct kthread_work *work)
 	struct sde_rot_entry_container *request;
 	struct sde_rot_hw_resource *hw;
 	struct sde_rot_mgr *mgr;
-	struct sched_param param = { .sched_priority = 5 };
+	struct sched_param param = { .sched_priority = 8 };
 	struct sde_rot_trace_entry rot_trace;
 	int ret;
 
