@@ -1128,7 +1128,6 @@ static void rcu_preempt_boost_start_gp(struct rcu_node *rnp)
  */
 static void rcu_spawn_one_boost_kthread(struct rcu_node *rnp)
 {
-	int rnp_index = rnp - &rsp->node[0];
 	unsigned long flags;
 	struct sched_param sp;
 	struct task_struct *t;
@@ -1145,7 +1144,7 @@ static void rcu_spawn_one_boost_kthread(struct rcu_node *rnp)
 		return;
 
 	t = kthread_create(rcu_boost_kthread, (void *)rnp,
-			   "rcub/%d", rnp_index);
+			   "rcub/%d");
 	if (WARN_ON_ONCE(IS_ERR(t)))
 		return;
 
@@ -2268,7 +2267,7 @@ static void rcu_spawn_one_nocb_kthread(int cpu)
 	}
 
 	/* Spawn the kthread for this CPU. */
-	t = kthread_run_perf_critical(rcu_nocb_cb_kthread, rdp,
+	t = kthread_run(rcu_nocb_cb_kthread, rdp,
 			"rcuo%c/%d", rcu_state.abbr, cpu);
 	if (WARN_ONCE(IS_ERR(t), "%s: Could not start rcuo CB kthread, OOM is now expected behavior\n", __func__))
 		return;
