@@ -810,34 +810,6 @@ static ssize_t thermal_pwrlevel_show(struct device *dev,
 	return scnprintf(buf, PAGE_SIZE, "%d\n", pwr->thermal_pwrlevel);
 }
 
-static ssize_t max_pwrlevel_store(struct device *dev,
-				struct device_attribute *attr,
-				const char *buf, size_t count)
-{
-	struct kgsl_device *device = dev_get_drvdata(dev);
-	struct kgsl_pwrctrl *pwr = &device->pwrctrl;
-	int ret;
-	unsigned int level = 0;
-
-	ret = kgsl_sysfs_store(buf, &level);
-	if (ret)
-		return ret;
-
-	mutex_lock(&device->mutex);
-
-	/* You can't set a maximum power level lower than the minimum */
-	if (level > pwr->min_pwrlevel)
-		level = pwr->min_pwrlevel;
-
-	pwr->max_pwrlevel = level;
-
-	/* Update the current level using the new limit */
-	kgsl_pwrctrl_pwrlevel_change(device, pwr->active_pwrlevel);
-	mutex_unlock(&device->mutex);
-
-	return count;
-}
-
 static ssize_t max_pwrlevel_show(struct device *dev,
 			struct device_attribute *attr, char *buf)
 {

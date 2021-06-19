@@ -2713,8 +2713,8 @@ int drm_mode_atomic_ioctl(struct drm_device *dev, void *data,
 		.type = PM_QOS_REQ_AFFINE_CORES,
 		.cpus_affine = ATOMIC_INIT(BIT(raw_smp_processor_id()) |
 					   *cpumask_bits(cpu_prime_mask))
+	};
 	int ret;
-
 	pm_qos_add_request(&req, PM_QOS_CPU_DMA_LATENCY, 100);
 	ret = __drm_mode_atomic_ioctl(dev, data, file_priv);
 	pm_qos_remove_request(&req);

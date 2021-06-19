@@ -36,3 +36,4 @@ int read_range_data_from_node(struct device_node *node,
 		const char *prop_str, struct range_data *ranges,
 		int max_threshold, u32 max_value);
 #endif /* __STEP_CHG_H__ */
+
