@@ -1097,7 +1097,7 @@ static int sde_rotator_init_queue(struct sde_rot_mgr *mgr)
 {
 	int i, size, ret = 0;
 	char name[32];
-	struct sched_param param = { .sched_priority = 15 };
+	struct sched_param param = { .sched_priority = 10 };
 
 	size = sizeof(struct sde_rot_queue) * mgr->queue_count;
 	mgr->commitq = devm_kzalloc(mgr->device, size, GFP_KERNEL);
@@ -1543,7 +1543,7 @@ static void sde_rotator_commit_handler(struct kthread_work *work)
 	struct sde_rot_entry_container *request;
 	struct sde_rot_hw_resource *hw;
 	struct sde_rot_mgr *mgr;
-	struct sched_param param = { .sched_priority = 8 };
+	struct sched_param param = { .sched_priority = 6 };
 	struct sde_rot_trace_entry rot_trace;
 	int ret;
 
