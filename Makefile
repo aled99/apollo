@@ -731,9 +731,8 @@ KBUILD_LDFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-detect-keep-going \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
-KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
-KBUILD_AFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
-KBUILD_LDFLAGS	+= --plugin-opt=mcpu=cortex-a55
+KBUILD_CFLAGS	+= -mcpu=cortex-a55+crc+crypto -mtune=cortex-a55
+KBUILD_AFLAGS	+= -mcpu=cortex-a55+crc+crypto -mtune=cortex-a55
 endif
 endif
 
