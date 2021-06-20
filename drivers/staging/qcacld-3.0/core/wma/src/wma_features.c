@@ -2168,8 +2168,6 @@ static void wma_wow_parse_data_pkt(t_wma_handle *wma,
 
 	src_mac = data + QDF_NBUF_SRC_MAC_OFFSET;
 	dest_mac = data + QDF_NBUF_DEST_MAC_OFFSET;
-	wma_debug("Src_mac: " QDF_MAC_ADDR_STR ", Dst_mac: " QDF_MAC_ADDR_STR,
-		 QDF_MAC_ADDR_ARRAY(src_mac), QDF_MAC_ADDR_ARRAY(dest_mac));
 
 	wma_wow_inc_wake_lock_stats_by_dst_addr(wma, vdev_id, dest_mac);
 
