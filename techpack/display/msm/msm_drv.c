@@ -717,7 +717,7 @@ static int msm_drm_init(struct device *dev, struct drm_driver *drv)
 	struct msm_drm_private *priv;
 	struct msm_kms *kms = NULL;
 	int ret;
-	struct sched_param param = { 1 };
+	struct sched_param param = { 0 };
 	struct drm_crtc *crtc;
 
 	ddev = drm_dev_alloc(drv, dev);

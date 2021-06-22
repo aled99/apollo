@@ -1097,7 +1097,7 @@ static int sde_rotator_init_queue(struct sde_rot_mgr *mgr)
 {
 	int i, size, ret = 0;
 	char name[32];
-	struct sched_param param = { .sched_priority = 8 };
+	struct sched_param param = { .sched_priority = 7 };
 
 	size = sizeof(struct sde_rot_queue) * mgr->queue_count;
 	mgr->commitq = devm_kzalloc(mgr->device, size, GFP_KERNEL);
