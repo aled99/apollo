@@ -1355,7 +1355,8 @@ static irqreturn_t nvt_ts_work_func(int irq, void *data)
 	if (bTouchIsAwake == 0) {
 		input_id = (uint8_t)(point_data[1] >> 3);
 		nvt_ts_wakeup_gesture_report(input_id, point_data);
-		goto XFER_ERROR;
+		mutex_unlock(&ts->lock);
+		return IRQ_HANDLED;
 	}
 #endif
 
