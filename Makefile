@@ -637,7 +637,6 @@ ifdef CONFIG_LTO_CLANG
 LLVM_AR		:= llvm-ar
 LLVM_NM		:= llvm-nm
 export LLVM_AR LLVM_NM
-LDFLAGS		+= --plugin-opt=O3 
 endif
 
 # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
@@ -734,6 +733,7 @@ KBUILD_LDFLAGS	+= -mllvm -polly \
 KBUILD_CFLAGS	+= -mcpu=cortex-a55+crc+crypto -mtune=cortex-a55
 KBUILD_AFLAGS	+= -mcpu=cortex-a55+crc+crypto -mtune=cortex-a55
 KBUILD_LDFLAGS	+= --plugin-opt=mcpu=cortex-a55
+KBUILD_LDFLAGS	+= --plugin-opt=O2
 endif
 endif
 
