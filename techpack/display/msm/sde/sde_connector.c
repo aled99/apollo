@@ -2217,14 +2217,6 @@ static ssize_t _sde_debugfs_conn_esd_test_write(struct file *file,
 	int power_mode;
 	char *input;
 	int rc = 0;
-	const char *sde_power_mode_str[] = {
-		[SDE_MODE_DPMS_ON] = "SDE_MODE_DPMS_ON",
-		[SDE_MODE_DPMS_LP1] = "SDE_MODE_DPMS_LP1",
-		[SDE_MODE_DPMS_LP2] = "SDE_MODE_DPMS_LP2",
-		[SDE_MODE_DPMS_STANDBY] = "SDE_MODE_DPMS_STANDBY",
-		[SDE_MODE_DPMS_SUSPEND] = "SDE_MODE_DPMS_SUSPEND",
-		[SDE_MODE_DPMS_OFF] = "SDE_MODE_DPMS_OFF",
-	};
 
 	if (!display || !display->panel) {
 		SDE_ERROR("invalid display/panel\n");
@@ -2257,7 +2249,6 @@ static ssize_t _sde_debugfs_conn_esd_test_write(struct file *file,
 				goto end;
 			}
 			power_mode = display->panel->power_mode;
-			DSI_INFO("[esd-test]power_mode = %s\n", sde_power_mode_str[power_mode]);
 			if (power_mode == SDE_MODE_DPMS_ON ||
 				power_mode == SDE_MODE_DPMS_LP1) {
 				atomic_set(&display->panel->esd_recovery_pending, 1);
