@@ -78,6 +78,7 @@ static ssize_t max_brightness_show(struct device *dev,
 #ifndef CONFIG_MACH_XIAOMI_SM8250
 static DEVICE_ATTR_RO(max_brightness);
 #else
+
 static ssize_t max_brightness_store(struct device *dev,
 		struct device_attribute *attr, const char *buf, size_t size)
 {
