@@ -82,14 +82,6 @@ static DEFINE_RWLOCK(binfmt_lock);
 #define ZYGOTE64_BIN "/system/bin/app_process64"
 static struct signal_struct *zygote32_sig;
 static struct signal_struct *zygote64_sig;
-static atomic_t zygote32_pid;
-static atomic_t zygote64_pid;
-
-bool is_zygote_pid(pid_t pid)
-{
-	return atomic_read(&zygote32_pid) == pid ||
-		atomic_read(&zygote64_pid) == pid;
-}
 
 bool task_is_zygote(struct task_struct *p)
 {
@@ -1859,13 +1851,6 @@ static int __do_execve_file(int fd, struct filename *filename,
 			current->flags |= PF_PERF_CRITICAL;
 			set_cpus_allowed_ptr(current, cpu_perf_mask);
 		}
-	}
-	
-	if (capable(CAP_SYS_ADMIN)) {
-		if (unlikely(!strcmp(filename->name, ZYGOTE32_BIN)))
-			atomic_set(&zygote32_pid, current->pid);
-		else if (unlikely(!strcmp(filename->name, ZYGOTE64_BIN)))
-			atomic_set(&zygote64_pid, current->pid);
 	}
 
 	/* execve succeeded */
