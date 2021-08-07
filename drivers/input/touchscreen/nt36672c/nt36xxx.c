@@ -2463,7 +2463,7 @@ static int32_t nvt_ts_probe(struct platform_device *pdev)
 		pm_qos_add_request(&ts->pm_touch_req, PM_QOS_CPU_DMA_LATENCY,
 			   PM_QOS_DEFAULT_VALUE);
 		ret = request_threaded_irq(ts->client->irq, NULL, nvt_ts_work_func,
-				ts->int_trigger_type | IRQF_ONESHOT | IRQF_PRIME_AFFINE,
+				ts->int_trigger_type | IRQF_ONESHOT | IRQF_PERF_AFFINE,
 				NVT_SPI_NAME, ts);
 		if (ret != 0) {
 			NVT_ERR("request irq failed. ret=%d\n", ret);
