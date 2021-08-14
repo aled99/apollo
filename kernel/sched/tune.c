@@ -718,7 +718,7 @@ boost_write(struct cgroup_subsys_state *css, struct cftype *cft,
 static int boost_write_wrapper(struct cgroup_subsys_state *css,
 			       struct cftype *cft, s64 boost)
 {
-	if (task_is_booster(current))
+	if (!strcmp(current->comm, "init"))
 		return 0;
 
 	return boost_write(css, cft, boost);
@@ -727,7 +727,7 @@ static int boost_write_wrapper(struct cgroup_subsys_state *css,
 static int prefer_idle_write_wrapper(struct cgroup_subsys_state *css,
 				     struct cftype *cft, u64 prefer_idle)
 {
-	if (task_is_booster(current))
+	if (!strcmp(current->comm, "init"))
 		return 0;
 
 	return prefer_idle_write(css, cft, prefer_idle);
@@ -738,7 +738,7 @@ static struct cftype files[] = {
 	{
 		.name = "sched_boost_no_override",
 		.read_u64 = sched_boost_override_read,
-		.write_u64 = sched_boost_override_write_wrapper,
+		.write_u64 = sched_boost_override_write,
 	},
 #ifdef CONFIG_SCHED_WALT
 	{

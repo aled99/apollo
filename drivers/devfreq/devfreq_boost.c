@@ -146,7 +146,7 @@ static void devfreq_update_boosts(struct boost_dev *b, unsigned long state)
 	struct devfreq *df = b->df;
 
 	mutex_lock(&df->lock);
-	if (!(state & BIT(SCREEN_ON))) {
+	if (test_bit(SCREEN_OFF, &state)) {
 		df->min_freq = df->profile->freq_table[0];
 		df->max_boost = false;
 	} else {
@@ -328,14 +328,10 @@ static int __init devfreq_boost_init(void)
 
 	d->msm_drm_notif.notifier_call = msm_drm_notifier_cb;
 	d->msm_drm_notif.priority = INT_MAX;
-	if (lcd_active_panel) {
-		ret = drm_panel_notifier_register(lcd_active_panel, &d->msm_drm_notif);
-		if (ret) {
-			pr_err("Unable to register msm_drm notifier: %d\n", ret);
-			goto unregister_handler;
-		}
-	} else {
-		pr_err("lcd_active_panel is null\n");
+	ret = msm_drm_register_client(&d->msm_drm_notif);
+	if (ret) {
+		pr_err("Failed to register fb notifier, err: %d\n", ret);
+		goto unregister_handler;
 	}
 
 	return 0;
