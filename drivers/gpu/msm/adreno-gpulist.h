@@ -14,7 +14,6 @@ static const struct adreno_gpu_core adreno_gpu_core_##_name = { \
 	DEFINE_ADRENO_REV(_rev, _core, _major, _minor, _patchid), \
 	.features = ADRENO_DEPRECATED, \
 }
-
 DEFINE_DEPRECATED_CORE(a630v1, ADRENO_REV_A630, 6, 3, 0, 0);
 
 static const struct adreno_reglist a630_hwcg_regs[] = {
@@ -328,7 +327,7 @@ static const struct adreno_a6xx_core adreno_gpu_core_a619 = {
 	},
 	.prim_fifo_threshold = 0x0018000,
 	.gmu_major = 1,
-	.gmu_minor = 10,
+	.gmu_minor = 11,
 	.sqefw_name = "a630_sqe.fw",
 	.gmufw_name = "a619_gmu.bin",
 	.zap_name = "a615_zap",
