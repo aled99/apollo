@@ -33,12 +33,7 @@ UBSAN_SANITIZE			:= n
 OBJECT_FILES_NON_STANDARD	:= y
 KCOV_INSTRUMENT			:= n
 
-ifeq ($(cc-name),clang)
-CFLAGS_vgettimeofday.o = -O3 -fasynchronous-unwind-tables
-else
-CFLAGS_vgettimeofday.o = -O2 -fasynchronous-unwind-tables
-endif
-CFLAGS_vgettimeofday.o = -O2 -mcmodel=tiny -fasynchronous-unwind-tables
+CFLAGS_vgettimeofday.o = -O3 -mcmodel=tiny
 
 ifneq ($(c-gettimeofday-y),)
   CFLAGS_vgettimeofday.o += -include $(c-gettimeofday-y)
