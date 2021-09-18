@@ -30,6 +30,7 @@
 #include <linux/of_irq.h>
 #include <linux/debugfs.h>
 #include <drm/drm_notifier_mi.h>
+#include <linux/spi/spi-geni-qcom.h>
 
 #include <linux/notifier.h>
 #include <linux/fb.h>
@@ -37,6 +38,7 @@
 #include <linux/earlysuspend.h>
 #endif
 
+#include "spi-xiaomi-tp.h"
 #include "nt36xxx.h"
 #if NVT_TOUCH_ESD_PROTECT
 #include <linux/jiffies.h>
