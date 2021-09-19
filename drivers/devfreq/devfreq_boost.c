@@ -9,7 +9,6 @@
 #include <drm/drm_notifier_mi.h>
 #include <linux/input.h>
 #include <linux/kthread.h>
-#include <linux/msm_drm_notify.h>
 #include <linux/slab.h>
 #include <uapi/linux/sched/types.h>
 #include <drm/drm_panel.h>
