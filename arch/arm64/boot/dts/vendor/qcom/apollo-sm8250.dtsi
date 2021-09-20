@@ -1,7 +1,6 @@
 /*
 this file is for attribution only of apollo
 */
-
 #include "apollo-pinctrl.dtsi"
 #include "xiaomi-sm8250-common.dtsi"
 #include "apollo-audio-overlay.dtsi"
@@ -27,17 +26,17 @@ this file is for attribution only of apollo
 };
 
 &CPU4 {
-	capacity-dmips-mhz = <1024>;
+	capacity-dmips-mhz = <1022>;
 	dynamic-power-coefficient = <340>;
 };
 
 &CPU5 {
-	capacity-dmips-mhz = <1024>;
+	capacity-dmips-mhz = <1022>;
 	dynamic-power-coefficient = <340>;
 };
 
 &CPU6 {
-	capacity-dmips-mhz = <1024>;
+	capacity-dmips-mhz = <1022>;
 	dynamic-power-coefficient = <340>;
 };
 
