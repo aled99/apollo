@@ -770,7 +770,6 @@ KBUILD_CFLAGS += -mllvm -polly \
 		   -mllvm -polly-ast-use-context \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
-KBUILD_LDFLAGS	+= --plugin-opt=mcpu=cortex-a55
 ifneq ($(CROSS_COMPILE),)
 CLANG_TRIPLE	?= $(CROSS_COMPILE)
 CLANG_TARGET	:= --target=$(notdir $(CLANG_TRIPLE:%-=%))
