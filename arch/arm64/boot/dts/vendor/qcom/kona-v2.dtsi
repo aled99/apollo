@@ -1,5 +1,4 @@
 #include "kona.dtsi"
-#include "kona-v2-gpu.dtsi"
 
 / {
 	model = "Qualcomm Technologies, Inc. kona v2";
